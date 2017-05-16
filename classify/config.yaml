@@ -1,0 +1,5 @@
+configfile: "config.yaml"
+
+wd: "wd"
+genomes: "0.genomes"
+fastq: "1.fastq"
