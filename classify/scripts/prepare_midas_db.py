@@ -14,7 +14,9 @@ def main(midas_rep_genomes_path, taxonomy_path):
 
     for taxon in taxa2paths:
         path = taxa2paths[taxon]
-        copyfile(path, join(out_dir, '{taxon}.fasta.gz'.format(taxon=taxon)))
+        outfile = join(out_dir, '{taxon}.fasta.gz'.format(taxon=taxon))
+        print(outfile)
+        copyfile(path, outfile)
 
 
 
