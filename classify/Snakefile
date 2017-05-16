@@ -25,9 +25,5 @@ rule simulate_reads:
     output:
         f1 = "{fastq_dir}/{{taxon}}.R1.fastq.gz".format(fastq_dir=FASTQ_DIR),
         f2 = "{fastq_dir}/{{taxon}}.R2.fastq.gz".format(fastq_dir=FASTQ_DIR)
-    run:
-        output_f1_noext = splitext(output.f1)[0]
-        output_f2_noext = splitext(output.f2)[0]
-        shell("mkdir -p {fastq_dir}".format(fastq_dir=FASTQ_DIR))
-        shell("wgsim -1 100 -2 100 {{input}} {output_f1} {output_f2}".format(output_f1=output_f1_noext, output_f2=output_f2_noext))
-        shell("gzip {output_f1} {output_f2}".format(output_f1=output_f1_noext, output_f2=output_f2_noext))
+    shell:
+        "python scripts/simulate_reads.py {fastq_dir} {{input}} {{output}}".format(fastq_dir=FASTQ_DIR)
