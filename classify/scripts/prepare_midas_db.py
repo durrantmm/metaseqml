@@ -9,7 +9,7 @@ def main(midas_rep_genomes_path, taxonomy_path):
     names2taxa = names_to_taxon_ids(taxonomy_path)
 
     taxa2paths = taxa_to_paths(genomes, names2taxa)
-    out_dir = join(dirname(midas_rep_genomes_path), '0.genomes')
+    out_dir = join(dirname(dirname(os.path.abspath(sys.argv[0]))), 'wd/0.genomes')
     os.makedirs(out_dir)
 
     for taxon in taxa2paths:
