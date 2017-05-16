@@ -4,10 +4,9 @@ import itertools
 import re
 from os.path import basename, join
 
-def main(fastq, taxonomy_path):
+def main(fastq, taxonomy_path, k):
 
     bases = ['A', 'T', 'G', 'C']
-    k = 2
     kmers = [''.join(p) for p in itertools.product(bases, repeat=k)]
 
     print("\t".join(["Seq"] + ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'] + kmers))
@@ -29,6 +28,7 @@ def main(fastq, taxonomy_path):
 
                 print("\t".join([seq] + hierarchy + kmer_comp))
 
+
 def get_hierarchy_names(taxonomy_path, taxon):
     nodes_path = join(taxonomy_path, 'nodes.dmp')
     merged_path = join(taxonomy_path, 'merged.dmp')
@@ -40,6 +40,7 @@ def get_hierarchy_names(taxonomy_path, taxon):
     hierarchy = get_taxon_hierarchy_list(taxon, nodes)
     hierarchy_names = taxon_list_to_names(hierarchy, ranks, names)
     return hierarchy_names
+
 
 def taxa_to_names(names_path):
 
@@ -153,4 +154,5 @@ if __name__ == '__main__':
 
     fastq_path = sys.argv[1]
     taxonomy_path = sys.argv[2]
-    main(fastq_path, taxonomy_path)
+    k = int(sys.argv[2])
+    main(fastq_path, taxonomy_path, k)

@@ -27,3 +27,12 @@ rule simulate_reads:
         f2 = "{fastq_dir}/{{taxon}}.R2.fastq.gz".format(fastq_dir=FASTQ_DIR)
     shell:
         "python scripts/simulate_reads.py {fastq_dir} {{input}} {{output}}".format(fastq_dir=FASTQ_DIR)
+
+rule extract_features:
+    input:
+        "{genomes_dir}/{{taxon}}.fasta.gz".format(genomes_dir=GENOMES_DIR)
+    output:
+        f1 = "{fastq_dir}/{{taxon}}.R1.fastq.gz".format(fastq_dir=FASTQ_DIR),
+        f2 = "{fastq_dir}/{{taxon}}.R2.fastq.gz".format(fastq_dir=FASTQ_DIR)
+    shell:
+        "python scripts/simulate_reads.py {fastq_dir} {{input}} {{output}}".format(fastq_dir=FASTQ_DIR)
