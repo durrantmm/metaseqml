@@ -14,8 +14,7 @@ PAIRS = ['R1', 'R2']
 
 rule all:
     input:
-        expand("{features_dir}/{{taxon}}.{{pair}}.{{k}}mer.tsv.gz".format(features_dir=FEATURES_DIR),
-               taxon=TAXA, pair=PAIRS, k=['5'])
+        join(WD, 'installed_packages.log')
     run:
         print("FINISHED WITH NO EXCEPTIONS!")
 
