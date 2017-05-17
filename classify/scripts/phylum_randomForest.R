@@ -15,7 +15,10 @@ features <- features[grepl("R1", features)]
 max_lines <- 5000
 n_max <-as.integer(max_lines / length(features))
 training_set <- NULL
+
+counter <- 1
 for (f in features){
+  print(paste("Reading in file ", counter, "of", length(features)))
   data_in <- read_tsv(f, n_max=n_max) %>% select(-Seq, -Kingdom, -Class, -Order, -Family, -Genus, -Species)
 
   if (is.null(data_in)){
@@ -23,6 +26,7 @@ for (f in features){
   }
   
   training_set <- rbind(training_set, data_in)
+  counter <- counter + 1
 }
 
 classif.lrn = makeLearner("classif.randomForest", predict.type = "prob", fix.factors.prediction = TRUE)
