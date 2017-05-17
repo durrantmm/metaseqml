@@ -25,7 +25,7 @@ def main(fastq, taxonomy_path, outfile, k):
 
             count = 0
             for index, line in enumerate(filein):
-                if count == 10000:
+                if count == 100000:
                     break
                 line = line.decode("UTF-8")
 
