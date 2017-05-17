@@ -15,7 +15,7 @@ PAIRS = ['R1', 'R2']
 rule all:
     input:
         expand("{features_dir}/{{taxon}}.{{pair}}.{{k}}mer.tsv.gz".format(features_dir=FEATURES_DIR),
-               taxon=TAXA, pair=PAIRS, k=['3','4','5','6'])
+               taxon=TAXA, pair=PAIRS, k=['5'])
     run:
         print("FINISHED WITH NO EXCEPTIONS!")
 
