@@ -22,7 +22,7 @@ for (f in features){
     training_set <- data_in
   }
   
-  training_set <- rbind(training_set, train_data)
+  training_set <- rbind(training_set, data_in)
 }
 
 classif.lrn = makeLearner("classif.randomForest", predict.type = "prob", fix.factors.prediction = TRUE)
