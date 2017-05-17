@@ -2,31 +2,41 @@ import sys
 import gzip
 import itertools
 import re
-from os.path import basename, join
+from os.path import dirname, basename, join, splitext
+from snakemake import shell
 
-def main(fastq, taxonomy_path, k):
+def main(fastq, taxonomy_path, outfile, k):
+
+    shell('mkdir -p {dir}'.format(dir=dirname(outfile)))
 
     bases = ['A', 'T', 'G', 'C']
     kmers = [''.join(p) for p in itertools.product(bases, repeat=k)]
 
-    print("\t".join(["Seq"] + ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'] + kmers))
+
 
     taxon = basename(fastq).split('.')[0]
     hierarchy = get_hierarchy_names(taxonomy_path, taxon)
 
     with gzip.open(fastq) as filein:
 
-        for index, line in enumerate(filein):
-            line = line.decode("UTF-8")
+        with open(splitext(outfile)[0], 'w') as fileout:
 
-            if index % 4 == 1:
+            fileout.write("\t".join(["Seq"] + ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'] + kmers) + '\n')
 
-                seq = line.strip()
+            for index, line in enumerate(filein):
+                line = line.decode("UTF-8")
 
-                kmer_comp_dict = get_kmer_comp(seq, k, kmers)
-                kmer_comp = str_kmer_comp(seq, kmer_comp_dict, kmers)
+                if index % 4 == 1:
 
-                print("\t".join([seq] + hierarchy + kmer_comp))
+                    seq = line.strip()
+
+                    kmer_comp_dict = get_kmer_comp(seq, k, kmers)
+                    kmer_comp = str_kmer_comp(seq, kmer_comp_dict, kmers)
+
+                    fileout.write("\t".join([seq] + hierarchy + kmer_comp)+'\n')
+
+    shell('gzip {out}'.format(out=splitext(outfile)[0]))
+
 
 
 def get_hierarchy_names(taxonomy_path, taxon):
@@ -154,5 +164,6 @@ if __name__ == '__main__':
 
     fastq_path = sys.argv[1]
     taxonomy_path = sys.argv[2]
-    k = int(sys.argv[2])
-    main(fastq_path, taxonomy_path, k)
+    outfile = sys.argv[3]
+    k = int(sys.argv[4])
+    main(fastq_path, taxonomy_path, outfile, k)
