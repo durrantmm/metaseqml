@@ -4,6 +4,7 @@ wd: "wd"
 genomes: "0.genomes"
 fastq: "1.fastq"
 features: "2.features"
+models: "2.models"
 
 
 
