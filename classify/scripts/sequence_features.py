@@ -23,7 +23,10 @@ def main(fastq, taxonomy_path, outfile, k):
 
             fileout.write("\t".join(["Seq"] + ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'] + kmers) + '\n')
 
+            count = 0
             for index, line in enumerate(filein):
+                if count == 10000:
+                    break
                 line = line.decode("UTF-8")
 
                 if index % 4 == 1:
@@ -32,7 +35,7 @@ def main(fastq, taxonomy_path, outfile, k):
 
                     kmer_comp_dict = get_kmer_comp(seq, k, kmers)
                     kmer_comp = str_kmer_comp(seq, kmer_comp_dict, kmers)
-
+                    count += 1
                     fileout.write("\t".join([seq] + hierarchy + kmer_comp)+'\n')
 
     shell('gzip {out}'.format(out=splitext(outfile)[0]))
