@@ -18,7 +18,7 @@ training_set <- NULL
 for (f in features){
   data_in <- read_tsv(f, n_max=n_max) %>% select(-Seq, -Kingdom, -Class, -Order, -Family, -Genus, -Species)
 
-  if (is.null(train_data)){
+  if (is.null(data_in)){
     training_set <- data_in
   }
   
