@@ -12,7 +12,7 @@ dir.create(output_dir, recursive=TRUE)
 features <- list.files(features_dir, full.names=T)
 features <- features[grepl("R1", features)]
 
-max_lines <- 5000
+max_lines <- 1000000
 n_max <-as.integer(max_lines / length(features))
 training_set <- NULL
 

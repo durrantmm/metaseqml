@@ -16,6 +16,12 @@ PAIRS = ['R1', 'R2']
 rule all:
     input:
         join(MODELS_DIR, 'phylum.randomForest.rds')
+        join(MODELS_DIR, 'class.randomForest.rds')
+        join(MODELS_DIR, 'order.randomForest.rds')
+        join(MODELS_DIR, 'family.randomForest.rds')
+        join(MODELS_DIR, 'genus.randomForest.rds')
+        join(MODELS_DIR, 'species.randomForest.rds')
+
     run:
         print("FINISHED WITH NO EXCEPTIONS!")
 
@@ -59,3 +65,58 @@ rule train_phylum_random_forest:
         join(MODELS_DIR, 'phylum.randomForest.rds')
     shell:
         "Rscript scripts/phylum_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
+
+
+rule train_class_random_forest:
+    input:
+        join(WD, 'installed_packages.log'),
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(MODELS_DIR, 'class.randomForest.rds')
+    shell:
+        "Rscript scripts/class_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
+
+
+rule train_order_random_forest:
+    input:
+        join(WD, 'installed_packages.log'),
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(MODELS_DIR, 'order.randomForest.rds')
+    shell:
+        "Rscript scripts/order_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
+
+
+rule train_family_random_forest:
+    input:
+        join(WD, 'installed_packages.log'),
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(MODELS_DIR, 'family.randomForest.rds')
+    shell:
+        "Rscript scripts/family_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
+
+
+rule train_genus_random_forest:
+    input:
+        join(WD, 'installed_packages.log'),
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(MODELS_DIR, 'genus.randomForest.rds')
+    shell:
+        "Rscript scripts/genus_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
+
+
+rule train_species_random_forest:
+    input:
+        join(WD, 'installed_packages.log'),
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(MODELS_DIR, 'species.randomForest.rds')
+    shell:
+        "Rscript scripts/species_randomForest.R {features_dir} {models_dir}".format(features_dir=FEATURES_DIR, models_dir=MODELS_DIR)
