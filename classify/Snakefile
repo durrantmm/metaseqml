@@ -15,11 +15,11 @@ PAIRS = ['R1', 'R2']
 
 rule all:
     input:
-        join(MODELS_DIR, 'phylum.randomForest.rds')
-        join(MODELS_DIR, 'class.randomForest.rds')
-        join(MODELS_DIR, 'order.randomForest.rds')
-        join(MODELS_DIR, 'family.randomForest.rds')
-        join(MODELS_DIR, 'genus.randomForest.rds')
+        join(MODELS_DIR, 'phylum.randomForest.rds'),
+        join(MODELS_DIR, 'class.randomForest.rds'),
+        join(MODELS_DIR, 'order.randomForest.rds'),
+        join(MODELS_DIR, 'family.randomForest.rds'),
+        join(MODELS_DIR, 'genus.randomForest.rds'),
         join(MODELS_DIR, 'species.randomForest.rds')
 
     run:
