@@ -14,8 +14,8 @@ PAIRS = ['R1', 'R2']
 
 rule all:
     input:
-        expand("{features_dir}/{{taxon}}.{{pair}}.3mer.tsv.gz".format(features_dir=FEATURES_DIR),
-               taxon=TAXA, pair=PAIRS)
+        expand("{features_dir}/{{taxon}}.{{pair}}.{{k}}mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS, k=['3','4','5','6'])
     run:
         print("FINISHED WITH NO EXCEPTIONS!")
 
@@ -38,3 +38,33 @@ rule extract_features_3mer:
         "{features_dir}/{{taxon}}.{{pair}}.3mer.tsv.gz".format(features_dir=FEATURES_DIR)
     shell:
         "python scripts/sequence_features.py {input.fastq} {input.taxonomy} {output} 3"
+
+
+rule extract_features_4mer:
+    input:
+        fastq="{fastq_dir}/{{taxon}}.{{pair}}.fastq.gz".format(fastq_dir=FASTQ_DIR),
+        taxonomy=config['taxonomy']
+    output:
+        "{features_dir}/{{taxon}}.{{pair}}.4mer.tsv.gz".format(features_dir=FEATURES_DIR)
+    shell:
+        "python scripts/sequence_features.py {input.fastq} {input.taxonomy} {output} 4"
+
+
+rule extract_features_5mer:
+    input:
+        fastq="{fastq_dir}/{{taxon}}.{{pair}}.fastq.gz".format(fastq_dir=FASTQ_DIR),
+        taxonomy=config['taxonomy']
+    output:
+        "{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR)
+    shell:
+        "python scripts/sequence_features.py {input.fastq} {input.taxonomy} {output} 5"
+
+
+rule extract_features_6mer:
+    input:
+        fastq="{fastq_dir}/{{taxon}}.{{pair}}.fastq.gz".format(fastq_dir=FASTQ_DIR),
+        taxonomy=config['taxonomy']
+    output:
+        "{features_dir}/{{taxon}}.{{pair}}.6mer.tsv.gz".format(features_dir=FEATURES_DIR)
+    shell:
+        "python scripts/sequence_features.py {input.fastq} {input.taxonomy} {output} 6"
