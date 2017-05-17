@@ -3,7 +3,7 @@ if (!("mlr" %in% installed.packages()[,"Package"])){
   install.packages("randomForest", repos=c("https://cran.cnr.berkeley.edu/"))  
 }
 
-library(tidyr)
+library(readr)
 args = commandArgs(trailingOnly=TRUE)
 
 output_file <- args[1]
