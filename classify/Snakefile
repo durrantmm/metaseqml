@@ -68,3 +68,12 @@ rule extract_features_6mer:
         "{features_dir}/{{taxon}}.{{pair}}.6mer.tsv.gz".format(features_dir=FEATURES_DIR)
     shell:
         "python scripts/sequence_features.py {input.fastq} {input.taxonomy} {output} 6"
+
+rule install_r_packages:
+    input:
+        expand("{features_dir}/{{taxon}}.{{pair}}.5mer.tsv.gz".format(features_dir=FEATURES_DIR),
+               taxon=TAXA, pair=PAIRS)
+    output:
+        join(WD, 'installed_packages.log')
+    shell:
+        "Rscript scripts/install_packages.R {output}"
